@@ -1,0 +1,446 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Draw Rate Calculator</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+		<style>
+			body { font-family: -apple-system, sans-serif; font-size: 80%; max-width: 80em; margin: 0 auto; }
+			h1 { font-size: 1.5em;  }
+			h1, .warning { text-align: center; }
+			p { margin: 1.4em; }
+			#chart { height: 31em; width: calc(100% - 14em - 1.4em); }
+			#options { float: right; width: 14em; margin-left: 1.4em; }
+			#minimum { width: 3em; }
+			#group-checkboxes { margin: 0.5em 0; }
+			#options > label { font-weight: bold; display: block; margin: 1em 0 0.25em; }
+			#options > label:first-child { margin-top: 0; }
+			textarea { width: 95%; }
+			@media only screen and (max-width: 32em) {
+				#chart { width: 100%; }
+				#options { float: none; width: calc(100% - 1em); margin: 0 0.5em; }
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Draw Rate Calculator</h1>
+		<p class="warning"><strong>Warning:</strong> This is <strong>experimental</strong>, and may produce <strong>incorrect results</strong>. <strong>You are responsible</strong> for verifying any results before you use them.</p>
+		<form id="options">
+			<label>Graph the probability of drawing at least
+			<input id="minimum" type="number" value="1" min="1">
+			of:</label>
+			<textarea id="wishlist" name="wishlist" rows="5">Gridarvor
+Grand Edge</textarea>
+			<div id="group-checkboxes">
+			<input type="checkbox" id="any-ssr-w" name="any-ssr-w"><label for="any-ssr-w">Any SSR Weapon</label><br>
+			</div>
+			<label for="exclude-list">Excluding</label>
+			<textarea id="exclude-list" name="exclude-list" rows="5"></textarea>
+			<label for="max-draws">Maximum Draws</label>
+			<input id="max-draws" name="max-draws" type="number" value="100" min="1">
+			<label for="draw-data" title="Draw rate data copy and pasted from the in-game list">Draw rates from in-game</label>
+			<textarea id="draw-data" name="draw-data" rows="10">
+SS Rare Rates 3.00%
+SS Rare Weapon Rates
+  Dainsleif 0.021%
+  Lohengrin 0.021%
+  Claíomh Solais 0.021%
+  Nagelring 0.021%
+  Ascalon 0.021%
+  Greatsword Andalius 0.021%
+  Yyrkoon 0.021%
+  Caladbolg 0.021%
+  Ethereal Lasher 0.021%
+  Hauteclaire 0.021%
+  Hrotti 0.021%
+  Disparia 0.021%
+  Gram 0.021%
+  Lyst Sin 0.021%
+  Mistilteinn 0.021%
+  Hoarfrost Blade Persius 0.021%
+  Phantom Thief Blade 0.021%
+  Arsene 0.021%
+  Heaven's Cloud 0.021%
+  Thunder Dirk Jove 0.021%
+  Twin Helix 0.021%
+  Azoth 0.021%
+  Bloody Scar 0.021%
+  Brionac 0.021%
+  Luin 0.021%
+  Pilum 0.021%
+  Gargantua 0.021%
+  Turpin Spear 0.021%
+  Skyrend Spear 0.021%
+  Scarlet Crest Axe 0.021%
+  Way Flyer 0.021%
+  Mettle 0.021%
+  Split End 0.021%
+  Windflash 0.021%
+  Ukonvasara 0.021%
+  Soul Eater 0.021%
+  Vassago 0.021%
+  Forbidden Inferno 0.021%
+  Illusion Scepter 0.021%
+  Starblaze Rings 0.021%
+  Ice Crystal Staff 0.021%
+  Montague's Oath 0.021%
+  Ouroboros 0.021%
+  Kerykeion 0.021%
+  Wing of the Pure 0.021%
+  Capulet's Oath 0.021%
+  Sealed Claustrum 0.021%
+  Gridarvor 0.700%
+  Kalaurops 0.021%
+  Meteora 0.021%
+  Vlisragna 0.021%
+  Stratomizer 0.021%
+  Far Away 0.021%
+  Blushing Blossom Pin 0.021%
+  Brahma Gauntlet 0.021%
+  Magma Gauntlet 0.021%
+  Scarlet Vane 0.021%
+  Ancient Bandages 0.021%
+  Coco & Mimi 0.021%
+  Roseate Aetherial Bow 0.021%
+  Aetherial Bow 0.021%
+  Heroic Bow 0.021%
+  Mobius Strip 0.021%
+  Melodic Sphere 0.021%
+  Ocean Harp 0.021%
+  Sandcastle Song-Lume 0.021%
+  Cords of Heaven Lillah 0.021%
+  Venustas 0.021%
+  Dragon Slayer 0.021%
+  Fudo-Kuniyuki 0.021%
+SS Rare Summon Rates
+ Agni 0.010%
+ Athena 0.021%
+ Prometheus 0.022%
+ Satyr 0.021%
+ Sethlans 0.022%
+ Shiva 0.010%
+ Twin Elements 0.021%
+ Bonito 0.022%
+ Ca Ong 0.022%
+ Grani 0.021%
+ Kaguya 0.010%
+ Macula Marius 0.021%
+ Neptune 0.022%
+ Oceanus 0.021%
+ Varuna 0.010%
+ Baal 0.021%
+ Cybele 0.021%
+ Gilgamesh 0.022%
+ Medusa 0.021%
+ Tezcatlipoca 0.022%
+ Titan 0.010%
+ Garuda 0.021%
+ Morrigna 0.022%
+ Nezha 0.021%
+ Quetzalcoatl 0.021%
+ Setekh 0.022%
+ Siren 0.021%
+ Zephyrus 0.010%
+ Apollo 0.021%
+ Grand Order 0.010%
+ Hector 0.022%
+ Lucifer 0.010%
+ Odin 0.021%
+ Vortex Dragon 0.021%
+ Zeus 0.010%
+ Anubis 0.022%
+ Bahamut 0.010%
+ Dark Angel Olivia 0.021%
+ Hades 0.010%
+ Lich 0.021%
+ Satan 0.021%
+ Typhon 0.022%
+S Rare Rates 15.00%
+S Rare Weapon Rates
+  Ember Blade 0.053%
+  Fragarach 0.166%
+  Ram-Dao 0.053%
+  Tanzanite Sword Mikoh 0.053%
+  Almace 0.166%
+  Royal Rapier 0.053%
+  Frying Pan 0.053%
+  Grand Edge 1.500%
+  Ilhoon 0.166%
+  Twisted Dagger 0.166%
+  White Flag 0.053%
+  Arondight 0.053%
+  Lyst 0.053%
+  Purity Blade 0.053%
+  Tilvung 0.053%
+  Soulbond Dirk 0.053%
+  Mirage Knife 0.166%
+  Shrike's Beak 0.053%
+  Stiletto 0.166%
+  Fusetto 0.166%
+  Sword of Lisblanc 0.053%
+  Soul Edge 0.053%
+  Puppet Knife 0.053%
+  Scalpel 0.053%
+  Sword Breaker 0.166%
+  Wyrm Claw 0.053%
+  Flare Glaive 0.053%
+  Raging Halberd 0.053%
+  Narval 0.053%
+  Titanium Harpoon 0.053%
+  Trident 0.166%
+  Dreadflayer 0.053%
+  Giant Fork 0.053%
+  Golden Mop 0.053%
+  Partisan 0.166%
+  Dragonfliar Cutter 0.166%
+  Shura Vhara 0.166%
+  Vajranda 0.166%
+  Massive Axe 0.053%
+  Bullova 0.166%
+  Fremel Hammer 0.053%
+  Great Hammer 0.053%
+  Shoka 0.166%
+  Cloud Tomahawk 0.053%
+  Golden Woofer 0.053%
+  Horseman's Hammer 0.166%
+  Voulge 0.053%
+  Arson 0.053%
+  Nature's Mystery 0.053%
+  Soothing Torch 0.053%
+  Witch's Broom 0.053%
+  Ice Bough Staff 0.053%
+  Spritewood Staff 0.053%
+  Yagrush 0.166%
+  Pastoral Staff 0.166%
+  Zhonpeli 0.053%
+  Aerial Cane 0.053%
+  Flower Crown 0.053%
+  Wind-Rhyme Staff 0.053%
+  Holy Cane 0.166%
+  Sacred Codex 0.053%
+  Cursed Cane 0.053%
+  Shadow Scepter 0.053%
+  Dolphin 0.053%
+  Dragon Tail 0.166%
+  Fire Piece 0.053%
+  Colorful Crackerjack 0.053%
+  Quarrel 0.053%
+  Handy Arquebus 0.053%
+  Wheellock Axe 0.166%
+  Crosswind 0.166%
+  Snaphance 0.166%
+  Swallowtail 0.166%
+  Chain Knuckles 0.053%
+  Crimson Talons 0.053%
+  Cup and Saucer 0.053%
+  Kaiser Knuckles 0.053%
+  Impact Knuckles 0.053%
+  Mauler 0.166%
+  Metal Glove 0.053%
+  Neko Punch 0.166%
+  Jamadhar 0.166%
+  Merciless Chastening 0.053%
+  Heavy Blast Knuckles 0.053%
+  Misanga Bracelet 0.053%
+  Tiger Fang 0.053%
+  Glass Bow 0.053%
+  Imperial Bow 0.166%
+  Sarnga 0.166%
+  Aves 0.166%
+  Ice Bow 0.053%
+  Elfin Bow 0.166%
+  Sutera's Bow 0.053%
+  Shadow Bow 0.166%
+  Aquarium Harp 0.053%
+  Athanasius 0.166%
+  Songsmith's Harp 0.053%
+  Stravaria 0.053%
+  Iron Tiger 0.166%
+  Wandering Blade 0.053%
+  Fluorithium Blade 0.166%
+  Zanbato 0.053%
+  Sauria 0.166%
+S Rare Summon Rates
+ Garnet Carbuncle 0.200%
+ Hellhound 0.200%
+ Hydra 0.200%
+ Vrazarek Firewyrm 0.200%
+ Angelie Cascade 0.200%
+ Aquamarine Carbuncle 0.200%
+ Wilinus Icewyrm 0.200%
+ Doomworm 0.200%
+ Golem 0.200%
+ Myconid 0.200%
+ Ruination Gargoyle 0.200%
+ Stone Golem 0.200%
+ Zircon Carbuncle 0.200%
+ Elmenhilde Windsprite 0.200%
+ Elusious Windwyrm 0.200%
+ Griffin 0.200%
+ Wyvern 0.200%
+ Opal Carbuncle 0.200%
+ Pixie 0.200%
+ Onyx Carbuncle 0.200%
+Rare Rates 82.00%
+Rare Weapon Rates
+  Anelace 0.692%
+  Claymore 0.692%
+  Falchion 0.692%
+  Fire Sword 0.210%
+  Flame Rapier 0.692%
+  Vintage Flat Iron 0.210%
+  Ice Sword 0.692%
+  Icey Nail 0.692%
+  Shrimp Lure 0.210%
+  White Sword 0.210%
+  Earth Cutlass 0.692%
+  Heavy Metal Comb 0.210%
+  Two-Handed Sword 0.210%
+  Xiphos 0.210%
+  Lightbringer 0.210%
+  Old Sword 0.210%
+  Paper Fan 0.210%
+  Practice Sword 0.210%
+  Blue Crest 0.210%
+  Prism Tear 0.210%
+  Thunder Rapier 0.210%
+  Dark Sword 0.210%
+  Broken Bottle 0.210%
+  Fire Baselard 0.692%
+  Little Scarlet 0.210%
+  Kila 0.692%
+  Mailbreaker 0.692%
+  Water Kukri 0.692%
+  Kris 0.692%
+  Emerald Dagger 0.692%
+  Leaf Dagger 0.692%
+  Mandau 0.210%
+  Holy Kris 0.692%
+  Assassin's Dagger 0.692%
+  Bloody Piercer 0.210%
+  Dark Knife 0.692%
+  Switchblade 0.210%
+  Couse 0.692%
+  Fire Glaive 0.692%
+  Flame Halberd 0.692%
+  Langdebeve 0.692%
+  Aquan Killer 0.692%
+  Silver Pole 0.210%
+  Earth Halberd 0.692%
+  Ghillie Fork 0.210%
+  Halberd 0.692%
+  Night Horn 0.210%
+  Iron Pliers 0.210%
+  Soldier Axe 0.210%
+  Harvester 0.692%
+  Battle Axe 0.692%
+  Draph Hammer 0.210%
+  Earth Zaghnal 0.692%
+  Rock Hammer 0.692%
+  Sky Tomahawk 0.210%
+  Wind Axe 0.692%
+  Morning Star 0.210%
+  Tabar 0.692%
+  Thunder Kalinga Axe 0.692%
+  Neckchopper 0.692%
+  Forest Hermit Staff 0.210%
+  Rubia Rod 0.210%
+  Torch 0.210%
+  Cane 0.692%
+  Ocean Rod 0.692%
+  Snowman Rod 0.210%
+  Student Notebook 0.210%
+  Water Rod 0.692%
+  Feather Staff 0.692%
+  Stone Pole 0.210%
+  Taiaha 0.210%
+  Emerald Cane 0.692%
+  Feather Wand 0.210%
+  Moss Tree Staff 0.210%
+  Wind Rod 0.692%
+  Light Staff 0.210%
+  Shareeravadi 0.692%
+  Evil Wand 0.692%
+  The Cross 0.210%
+  Derringer 0.210%
+  Flame Bolt 0.210%
+  Grenade 0.692%
+  Matchlock 0.692%
+  Sawed-Off Shotgun 0.210%
+  Self Defender 0.210%
+  Straight Anchor 0.692%
+  Ranger Pistol 0.692%
+  Hand Pistol 0.692%
+  Petronel 0.210%
+  Jezail 0.692%
+  Chopsticks 0.210%
+  Fireball 0.692%
+  Heated Pata 0.692%
+  Pata 0.692%
+  Boogie Plates 0.210%
+  Fish Tooth 0.692%
+  Gauntlet 0.692%
+  Oven Mitts 0.210%
+  Tattoo Fist 0.210%
+  Tidal Wraps 0.692%
+  Iron Guard 0.210%
+  Mythril Knuckles 0.210%
+  Rock Cutter 0.692%
+  Tonfa 0.210%
+  Enchanted Nail 0.210%
+  Light Buckler 0.210%
+  Mythril Baghnakhs 0.692%
+  Whirlwind Wraps 0.692%
+  Blast Knuckles 0.210%
+  Composite Bow 0.692%
+  Flame Bow 0.210%
+  Mythril Bow 0.692%
+  Longbow 0.692%
+  Earth Bow 0.692%
+  Power Bow 0.692%
+  War Bow 0.692%
+  Wrapped Bow 0.692%
+  Lyre of Lamia 0.692%
+  Bronze Bell 0.210%
+  Night Bell 0.210%
+  Nodachi 0.692%
+  Mythril Katana 0.692%
+Rare Summon Rates
+ Minotaur 1.041%
+ Twilight Devil 1.041%
+ Venom Lancer 1.041%
+ Walking Torch 1.041%
+ Angelie 1.041%
+ Crusher 1.041%
+ Jawfish 1.041%
+ Purgatorian 1.041%
+ Rivacuda 1.041%
+ Slime 1.041%
+ Swordshark 1.041%
+ Bonethorn 1.041%
+ Crawler 1.041%
+ Lumacie Griffin 1.041%
+ Mandrake 1.041%
+ Sleepyhead 1.041%
+ Belle 1.041%
+ Dragonflair 1.041%
+ Hornbird 1.041%
+ Rodfly 1.041%
+ Ghost Light 1.041%
+ Cave Bat 1.041%
+ Imp 1.041%
+ Skeleton 1.041%
+			</textarea>
+			<small>Built-in draw rates last updated 2017-01-21.</small>
+		</form>
+		<div id="chart"></div>
+		<p>Bookmark this page to save your wishlist and settings. Updates to the draw rate input list are not currently saved.</p>
+		<p id="formula"></p>
+		<script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<script defer src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.0/raphael-min.js"></script>
+		<script defer src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+		<script defer src="https://cdnjs.cloudflare.com/ajax/libs/levenshtein/1.0.5/levenshtein.min.js"></script>
+		<script defer src="draw.js"></script>
+	</body>
+</html>
