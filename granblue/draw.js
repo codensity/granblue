@@ -205,6 +205,7 @@ function updateRates() {
         checkbox.type = "checkbox";
         checkbox.id = id;
         checkbox.name = id;
+        checkbox.checked = includedGroups[group] || false;
         checkbox.addEventListener("change", function() {
             if (this.checked) {
                 includedGroups[group] = true;
@@ -243,7 +244,7 @@ function loadState(st) {
     groups.forEach(function(group) {
         var elem = document.getElementById(groupCheckboxID(group));
         if (elem) {
-            elem.checked = includedGroups[group];
+            elem.checked = includedGroups[group] || false;
         }
     });
 }
