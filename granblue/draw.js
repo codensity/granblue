@@ -167,6 +167,9 @@ var excludeListInput = document.getElementById("exclude-list");
 var drawDataInput = document.getElementById("draw-data");
 var groupsElement = document.getElementById("group-checkboxes");
 
+var characters;
+var charactersByName = {};
+
 var rates;
 var ratesByName;
 var groups;
@@ -174,6 +177,13 @@ var includedGroups = {};
 
 function groupCheckboxID(group) {
     return "group-" + group.replace(/[^a-zA-Z]/, "-");
+}
+
+function updateCharacters(cs) {
+    characters = cs;
+    characters.forEach(function(c) {
+        charactersByName[c.name] = c;
+    });
 }
 
 function updateRates() {
@@ -276,29 +286,46 @@ function autocorrectNames(names) {
         return name !== "";
     }).map(function(name) {
         var item = ratesByName[name];
-        if (item) return item;
+        if (item !== undefined) return item.name;
+        var character = charactersByName[name];
+        if (character !== undefined) return character.name;
         var distances = {};
         rates.forEach(function(item) {
             distances[item.name] = Levenshtein(item.name, name);
         });
-        return rates.reduce(function(a, b) {
-            return distances[a.name] < distances[b.name] ? a : b;
+        characters.forEach(function(c) {
+            distances[c.name] = Levenshtein(c.name, name);
         });
-    }), function(item) {
-        return item.name;
+        var closestWeapon = rates.reduce(function(a, b) {
+            return distances[a.name] < distances[b.name] ? a : b;
+        }).name;
+        var closestCharacter = characters.reduce(function(a, b) {
+            return distances[a.name] < distances[b.name] ? a : b;
+        }).name;
+        var closest = distances[closestWeapon] < distances[closestCharacter] ?
+            closestWeapon :
+            closestCharacter;
+        return closest;
+    }), function(name) {
+        var c = charactersByName[name];
+        if (c === undefined) {
+            return name;
+        } else {
+            return c.join_weapon;
+        }
     });
 }
 
-function makeNameSet(items) {
+function makeSet(xs) {
     var s = {};
-    items.forEach(function(item) {
-        s[item.name] = true;
+    xs.forEach(function(x) {
+        s[x] = true;
     });
     return s;
 }
 
-function itemNamesToString(items) {
-    return items.map(function(x) { return x.name; }).join("\n");
+function unlines(items) {
+    return items.join("\n");
 }
 
 function updatePlotFromInputs(ev) {
@@ -308,11 +335,20 @@ function updatePlotFromInputs(ev) {
     var names = st.w.split("\n");
     var excludes = st.e.split("\n");
     var correctedNames = autocorrectNames(names);
-    var correctedNameSet = makeNameSet(correctedNames);
+    var correctedNameSet = makeSet(correctedNames);
     var correctedExcludes = autocorrectNames(excludes);
-    var correctedExcludeSet = makeNameSet(correctedExcludes);
+    var correctedExcludeSet = makeSet(correctedExcludes);
 
-    var allItems = correctedNames.concat(rates.filter(function(item) {
+    var allItems = correctedNames.map(function(name) {
+        var rate = ratesByName[name];
+        if (rate !== undefined) {
+            return rate;
+        } else {
+            return ratesByName[charactersByName[name].join_weapon];
+        }
+    }).filter(function(item) {
+        return item !== undefined;
+    }).concat(rates.filter(function(item) {
         return includedGroups[item.group] && correctedNameSet[item.name] !== true;
     })).filter(function(item) {
         return correctedExcludeSet[item.name] !== true;
@@ -329,11 +365,11 @@ function updatePlotFromInputs(ev) {
         if (minimumInput.value != min) {
             minimumInput.value = min;
         }
-        var correctedNamesString = itemNamesToString(correctedNames);
+        var correctedNamesString = unlines(correctedNames);
         if (wishlistInput.value !== correctedNamesString) {
             wishlistInput.value = correctedNamesString;
         }
-        var correctedExcludeString = itemNamesToString(correctedExcludes);
+        var correctedExcludeString = unlines(correctedExcludes);
         if (excludeListInput.value !== correctedExcludeString) {
             excludeListInput.value = correctedExcludeString;
         }
@@ -363,6 +399,13 @@ window.addEventListener("popstate", function(e) {
         updatePlotFromInputs();
     }
 });
-updateRates();
-loadStateFromHash();
-updatePlotFromInputs();
+
+var charactersRequest = new XMLHttpRequest();
+charactersRequest.addEventListener("load", function() {
+    updateCharacters(JSON.parse(this.responseText).characters);
+    updateRates();
+    loadStateFromHash();
+    updatePlotFromInputs();
+});
+charactersRequest.open("GET", "characters.json");
+charactersRequest.send();
