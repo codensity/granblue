@@ -111,12 +111,13 @@ function removeAllChildren(e) {
 }
 
 var chartElementID = "chart";
-var chartElement = document.getElementById(chartElementID);
 var formulaElement = document.getElementById("formula");
 
 function roundWith(n, m) {
     return Math.round(n * m) / m;
 }
+
+var chart;
 
 function plot(min, n, prob) {
     var step = n <= 50 ? 1 : n <= 100 ? 2 : 5;
@@ -137,8 +138,12 @@ function plot(min, n, prob) {
         roundWith(prob, 1000000) + ") = " +
         roundWith(data[data.length - 1].p / 100, 1000000);
 
-    removeAllChildren(chartElement);
-    new Morris.Line({
+    if (chart !== undefined) {
+        chart.setData(data);
+        return;
+    }
+
+    chart = new Morris.Line({
         element: chartElementID,
         data: data,
         xkey: "draws",
