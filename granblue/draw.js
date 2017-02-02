@@ -321,6 +321,23 @@ function autocorrectNames(names) {
     });
 }
 
+function ratesForNames(names) {
+    return names.map(function(name) {
+        var rate = ratesByName[name];
+        if (rate !== undefined) {
+            return rate;
+        } else {
+            return ratesByName[charactersByName[name].join_weapon];
+        }
+    }).filter(function(item) {
+        return item !== undefined;
+    });
+}
+
+function namesOf(items) {
+    return items.map(function(item) { return item.name; });
+}
+
 function makeSet(xs) {
     var s = {};
     xs.forEach(function(x) {
@@ -340,20 +357,12 @@ function updatePlotFromInputs(ev) {
     var names = st.w.split("\n");
     var excludes = st.e.split("\n");
     var correctedNames = autocorrectNames(names);
-    var correctedNameSet = makeSet(correctedNames);
+    var correctedRates = ratesForNames(correctedNames);
+    var correctedNameSet = makeSet(namesOf(correctedRates));
     var correctedExcludes = autocorrectNames(excludes);
-    var correctedExcludeSet = makeSet(correctedExcludes);
+    var correctedExcludeSet = makeSet(namesOf(ratesForNames(correctedExcludes)));
 
-    var allItems = correctedNames.map(function(name) {
-        var rate = ratesByName[name];
-        if (rate !== undefined) {
-            return rate;
-        } else {
-            return ratesByName[charactersByName[name].join_weapon];
-        }
-    }).filter(function(item) {
-        return item !== undefined;
-    }).concat(rates.filter(function(item) {
+    var allItems = correctedRates.concat(rates.filter(function(item) {
         return includedGroups[item.group] && correctedNameSet[item.name] !== true;
     })).filter(function(item) {
         return correctedExcludeSet[item.name] !== true;
