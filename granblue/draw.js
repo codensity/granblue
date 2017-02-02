@@ -146,6 +146,7 @@ function plot(min, n, prob) {
     chart = new Morris.Line({
         element: chartElementID,
         data: data,
+        axes: "y",
         xkey: "draws",
         ykeys: ["p"],
         ymin: 0,
