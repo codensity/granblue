@@ -13,13 +13,16 @@ try:
 except IOError as e:
     response = requests.get('https://gbf.wiki/Module:Sandbox/Botanist/CharacterWeapons/doc')
     html_content = response.content
-    with open(html_filename, 'w') as f:
+    with open(html_filename, 'wb') as f:
         f.write(html_content)
 
 tree = html.fromstring(html_content)
 def extract_row(row):
+    name = row[5].text
+    if name.startswith('Sandbox/'):
+        name = row[4][0].text
     return {
-        'name': row[5].text,
+        'name': name,
         'rarity': row[6].text,
         'element': row[7].text,
         'type': row[8].text,
@@ -31,9 +34,7 @@ def keep_row(row):
     name = row['name']
     return join_weapon != '???' and \
            join_weapon != '' and \
-           name != 'name' and \
-           not name.startswith('User:') and \
-           not name.startswith('Sandbox/')
+           name != 'name'
 data = list(filter(keep_row, map(extract_row, CSSSelector('table tr')(tree))))
 data.sort(key=lambda row: row['name'])
 print(json.dumps({'characters': data}, indent=4, sort_keys=True))
