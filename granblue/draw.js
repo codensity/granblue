@@ -171,72 +171,116 @@ var minimumInput = document.getElementById("minimum");
 var wishlistInput = document.getElementById("wishlist");
 var excludeListInput = document.getElementById("exclude-list");
 var drawDataInput = document.getElementById("draw-data");
-var groupsElement = document.getElementById("group-checkboxes");
+var queriesElement = document.getElementById("queries");
+var addQueryElement = document.getElementById("add-query");
 
 var characters;
 var charactersByName = {};
+var charactersByWeaponName = {};
 
 var rates;
 var ratesByName;
-var groups;
-var includedGroups = {};
+var queries = [];
+var characterProperties = ['rarity', 'element', 'race'];
+var propertySets = {};
+characterProperties.forEach(function(p) {
+    propertySets[p] = {};
+});
 
-function groupCheckboxID(group) {
-    return "group-" + group.replace(/[^a-zA-Z]/, "-");
+function idify(name) {
+    return name.replace(/[^a-zA-Z]/, "-");
+}
+
+function splitGroup(g) {
+    return g.split(" ");
+}
+
+function ucfirst(s) {
+    return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
 function updateCharacters(cs) {
     characters = cs;
     characters.forEach(function(c) {
         charactersByName[c.name] = c;
+        charactersByWeaponName[c.join_weapon] = c;
+        characterProperties.forEach(function(p) {
+            propertySets[p][c[p]] = true;
+        });
     });
 }
 
 function updateRates() {
     var dataText = drawDataInput.value;
-    var currentGroup = null;
+    var currentRarity = null;
+    var currentKind = null;
     rates = [];
     ratesByName = {};
-    groups = {};
     dataText.split("\n").forEach(function(line) {
         var gm = line.match(/^(.+) Rates$/);
         if (gm) {
-            currentGroup = gm[1].replace(/ ?Rare /, "R ");
-            groups[currentGroup] = true;
+            var group = gm[1].replace(/ ?Rare /, "R ");
+            var groupParts = splitGroup(group);
+            currentRarity = groupParts[0];
+            currentKind = groupParts[1];
             return;
         }
         var m = line.match(/^ +([^0-9]+) ([0-9\.]+)%/);
         if (!m) return;
         var name = m[1];
         var p = +m[2] / 100;
-        var item = {name: name, p: p, group: currentGroup};
+        var item = {
+            name: name,
+            p: p,
+            rarity: currentRarity,
+            kind: currentKind
+        };
+        var character = charactersByWeaponName[name];
+        if (character) {
+            item.character = character;
+            item.element = character.element; // FIXME not always the same
+        }
         ratesByName[name] = item;
         rates.push(item);
     });
-    groups = Object.keys(groups).sort().reverse();
-    removeAllChildren(groupsElement);
-    groups.forEach(function(group) {
-        var id = groupCheckboxID(group);
-        var checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkbox.id = id;
-        checkbox.name = id;
-        checkbox.checked = includedGroups[group] || false;
-        checkbox.addEventListener("change", function() {
-            if (this.checked) {
-                includedGroups[group] = true;
-            } else {
-                delete includedGroups[group];
-            }
-            updatePlotFromInputs("change");
-        });
-        var label = document.createElement("label");
-        label.htmlFor = id;
-        label.innerText = "Any " + group;
-        groupsElement.appendChild(checkbox);
-        groupsElement.appendChild(label);
-        groupsElement.appendChild(document.createElement("br"));
+    removeAllChildren(addQueryElement);
+    var selects = characterProperties.map(function(property) {
+        var propSet = propertySets[property];
+        var select = document.createElement("select");
+        select.name = "add-query" + idify(property);
+        function addOption(text, value) {
+            var option = document.createElement("option");
+            option.value = value || text;
+            option.innerText = text;
+            select.appendChild(option);
+        }
+        var anyName = property === "race" ? "Kind" : ucfirst(property);
+        addOption("Any " + anyName, "any");
+        if (property === "race") {
+            addOption("Any Summon", "summon");
+            addOption("Any Character", "character");
+        }
+        var values = Object.keys(propSet);
+        values.sort();
+        values.forEach(function(v) { addOption(v) });
+        addQueryElement.appendChild(select);
+        return {
+            property: property,
+            element: select,
+        };
     });
+    var addQueryButton = document.createElement("button");
+    addQueryButton.innerText = "Add";
+    addQueryButton.onclick = function(e) {
+        e.preventDefault();
+        var query = {};
+        selects.forEach(function(x) {
+            query[x.property] = x.element.value;
+        });
+        queries.push(query);
+        updatePlotFromInputs();
+    };
+    addQueryElement.appendChild(addQueryButton);
 }
 
 function currentState() {
@@ -247,7 +291,7 @@ function currentState() {
         m: min,
         w: wishlistInput.value,
         e: excludeListInput.value,
-        g: includedGroups,
+        q: queries
     };
 }
 
@@ -256,13 +300,16 @@ function loadState(st) {
     minimumInput.value = st.m;
     wishlistInput.value = st.w;
     excludeListInput.value = st.e || "";
-    includedGroups = st.g;
-    groups.forEach(function(group) {
-        var elem = document.getElementById(groupCheckboxID(group));
-        if (elem) {
-            elem.checked = includedGroups[group] || false;
-        }
-    });
+    queries = st.q || [];
+    if (st.g !== undefined) {
+        Object.keys(st.g).forEach(function(g) {
+            var parts = splitGroup(g);
+            var kind = parts[1];
+            var race = kind === "Weapon" ? "character" : "summon";
+            var q = { rarity: parts[0], element: "any", race: race };
+            queries.push(q);
+        });
+    }
 }
 
 function loadStateFromHash() {
@@ -351,21 +398,45 @@ function unlines(items) {
     return items.join("\n");
 }
 
+function matchesQuery(query, item) {
+    function anyMatch(queryValue, value) {
+        return queryValue === "any" || value === queryValue;
+    }
+    if (!anyMatch(query.rarity, item.rarity)) return false;
+    if (!anyMatch(query.element, item.element)) return false;
+    if (query.race === "character") {
+        if (!item.character) return false;
+    } else if (query.race === "summon") {
+        if (item.kind !== "Summon") return false;
+    } else {
+        if (!item.character) return false;
+        if (!anyMatch(query.race, item.character.race)) return false;
+    }
+    return true;
+}
+
+function matchesAnyQuery(queries, item) {
+    return queries.some(function(q) { return matchesQuery(q, item); });
+}
+
 function updatePlotFromInputs(ev) {
     var st = currentState();
     var n = st.n;
     var min = st.m;
     var names = st.w.split("\n");
     var excludes = st.e.split("\n");
+    var qs = st.q;
     var correctedNames = autocorrectNames(names);
     var correctedRates = ratesForNames(correctedNames);
     var correctedNameSet = makeSet(namesOf(correctedRates));
     var correctedExcludes = autocorrectNames(excludes);
     var correctedExcludeSet = makeSet(namesOf(ratesForNames(correctedExcludes)));
 
-    var allItems = correctedRates.concat(rates.filter(function(item) {
-        return includedGroups[item.group] && correctedNameSet[item.name] !== true;
-    })).filter(function(item) {
+    var matchingItems = rates.filter(function(item) {
+        return correctedNameSet[item.name] !== true && matchesAnyQuery(qs, item);
+    });
+
+    var allItems = correctedRates.concat(matchingItems).filter(function(item) {
         return correctedExcludeSet[item.name] !== true;
     });
 
@@ -373,7 +444,7 @@ function updatePlotFromInputs(ev) {
     var probSum = probs.reduce(function(x, y){ return x + y; }, 0);
     plot(min, n, probSum);
 
-    if (ev === "change") {
+    if (ev !== "keyup") {
         if (maxDrawsInput.value != n) {
             maxDrawsInput.value = n;
         }
@@ -387,6 +458,48 @@ function updatePlotFromInputs(ev) {
         var correctedExcludeString = unlines(correctedExcludes);
         if (excludeListInput.value !== correctedExcludeString) {
             excludeListInput.value = correctedExcludeString;
+        }
+
+        if (queriesElement.children.length !== qs.length) {
+            removeAllChildren(queriesElement);
+            qs.forEach(function(q, i) {
+                var props = characterProperties.map(function(p) { return q[p]; }).
+                    filter(function(v) { return v !== 'any'; });
+
+                var matches = rates.filter(function(item) { return matchesQuery(q, item); });
+                var matchNames = matches.map(function(item) {
+                    if (item.character !== undefined) {
+                        return item.character.name + " (" + item.name + ")";
+                    } else {
+                        return item.name;
+                    }
+                });
+                matchNames.sort();
+                var matchCount = matches.length;
+
+                var text = "Any " + props.join(" ");
+                if (props.length === 0) {
+                    text += "Weapon or Summon";
+                }
+                text += " (" + matchCount + ")";
+
+                var li = document.createElement("li");
+                var span = document.createElement("span");
+                span.innerText = text;
+                span.title = matchNames.join("\n");
+                li.appendChild(span);
+                li.appendChild(document.createTextNode(" "));
+                var removeButton = document.createElement("a");
+                removeButton.href = "#";
+                removeButton.innerText = "x";
+                removeButton.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    queries.splice(i, 1);
+                    updatePlotFromInputs();
+                });
+                li.appendChild(removeButton);
+                queriesElement.appendChild(li);
+            });
         }
 
         var newURL = window.location.href.replace(window.location.hash, "") + "#" + encodeState(st);

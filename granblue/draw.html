@@ -13,7 +13,8 @@
 			#chart { height: 31em; width: calc(100% - 14em - 1.4em); }
 			#options { float: right; width: 14em; margin-left: 1.4em; }
 			#minimum { width: 3em; }
-			#group-checkboxes { margin: 0.5em 0; }
+			#queries { padding-left: 1em; }
+			#queries li span { border-bottom: 1px dotted #333; cursor: help; }
 			#options > label { font-weight: bold; display: block; margin: 1em 0 0.25em; }
 			#options > label:first-child { margin-top: 0; }
 			textarea { width: 95%; }
@@ -34,9 +35,8 @@
 Razia
 Mina
 Thor</textarea>
-			<div id="group-checkboxes">
-			<input type="checkbox" id="any-ssr-w" name="any-ssr-w"><label for="any-ssr-w">Any SSR Weapon</label><br>
-			</div>
+			<ul id="queries"></ul>
+			<div id="add-query"></div>
 			<label for="exclude-list">Excluding</label>
 			<textarea id="exclude-list" name="exclude-list" rows="5"></textarea>
 			<label for="max-draws">Maximum Draws</label>
