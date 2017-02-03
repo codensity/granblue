@@ -1,0 +1,1 @@
+JSON.stringify(Array.prototype.slice.call(document.querySelectorAll(".gacha-lineup-list .lis-gacha-lineup")).map(function(x) { return [x.querySelector(".txt-item-name").innerText, [null,"Fire","Water","Earth","Wind","Light","Dark"][+x.querySelector("[class*='ico-attribute']").className.split("-")[2]]]; }).reduce(function(o, p) { o[p[0]] = p[1]; return o; }, {}))

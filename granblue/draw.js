@@ -178,6 +178,8 @@ var characters;
 var charactersByName = {};
 var charactersByWeaponName = {};
 
+var drawItemElements;;
+
 var rates;
 var ratesByName;
 var queries = [];
@@ -210,6 +212,10 @@ function updateCharacters(cs) {
     });
 }
 
+function updateDrawItemElements(es) {
+    drawItemElements = es;
+}
+
 function updateRates() {
     var dataText = drawDataInput.value;
     var currentRarity = null;
@@ -239,6 +245,12 @@ function updateRates() {
         if (character) {
             item.character = character;
             item.element = character.element; // FIXME not always the same
+            item.race = character.race;
+        } else {
+            item.element = drawItemElements[name];
+            if (item.kind === 'Summon') {
+                item.race = 'summon';
+            }
         }
         ratesByName[name] = item;
         rates.push(item);
@@ -406,11 +418,8 @@ function matchesQuery(query, item) {
     if (!anyMatch(query.element, item.element)) return false;
     if (query.race === "character") {
         if (!item.character) return false;
-    } else if (query.race === "summon") {
-        if (item.kind !== "Summon") return false;
-    } else {
-        if (!item.character) return false;
-        if (!anyMatch(query.race, item.character.race)) return false;
+    } else if (!anyMatch(query.race, item.race)) {
+        return false;
     }
     return true;
 }
@@ -528,12 +537,31 @@ window.addEventListener("popstate", function(e) {
     }
 });
 
-var charactersRequest = new XMLHttpRequest();
-charactersRequest.addEventListener("load", function() {
-    updateCharacters(JSON.parse(this.responseText).characters);
+var charactersResponse, elementsResponse;
+function try_start() {
+    if (!charactersResponse || !elementsResponse) return;
+    updateCharacters(charactersResponse.characters);
+    updateDrawItemElements(elementsResponse);
     updateRates();
     loadStateFromHash();
     updatePlotFromInputs();
+}
+
+function get_json(url, done) {
+    var req = new XMLHttpRequest();
+    req.addEventListener("load", function() {
+        done(JSON.parse(this.responseText));
+    });
+    req.open("GET", url);
+    req.setRequestHeader("Accept", "application/json");
+    req.send();
+}
+
+get_json("characters.json", function(r) {
+    charactersResponse = r;
+    try_start();
 });
-charactersRequest.open("GET", "characters.json");
-charactersRequest.send();
+get_json("elements.json", function(r) {
+    elementsResponse = r;
+    try_start();
+});
