@@ -218,6 +218,14 @@
         },
         {
             "element": "Fire",
+            "join_weapon": "Delta Quartz",
+            "name": "Beatrix",
+            "race": "Human",
+            "rarity": "SSR",
+            "type": "Special"
+        },
+        {
+            "element": "Fire",
             "join_weapon": "Delta Apex",
             "name": "Beatrix",
             "race": "Human",
@@ -857,6 +865,14 @@
             "type": "Special"
         },
         {
+            "element": "Earth",
+            "join_weapon": "Tyrian Tiger Blade",
+            "name": "Jin",
+            "race": "Human",
+            "rarity": "SR",
+            "type": "Heal"
+        },
+        {
             "element": "Water",
             "join_weapon": "Silver Pole",
             "name": "Joel",
@@ -1257,6 +1273,14 @@
             "type": "Special"
         },
         {
+            "element": "Dark",
+            "join_weapon": "Parazonium",
+            "name": "Orchid",
+            "race": "Unknown",
+            "rarity": "SSR",
+            "type": "Special"
+        },
+        {
             "element": "Wind",
             "join_weapon": "Light Buckler",
             "name": "Pavidus",
@@ -1633,6 +1657,14 @@
             "type": "Balanced"
         },
         {
+            "element": "Wind",
+            "join_weapon": "Standard Albion Bolt",
+            "name": "Tyre",
+            "race": "Human",
+            "rarity": "SR",
+            "type": "Special"
+        },
+        {
             "element": "Water",
             "join_weapon": "Narval",
             "name": "Ulamnuran",
@@ -1819,6 +1851,14 @@
         {
             "element": "Light",
             "join_weapon": "Cletine",
+            "name": "Zeta",
+            "race": "Human",
+            "rarity": "SSR",
+            "type": "Attack"
+        },
+        {
+            "element": "Dark",
+            "join_weapon": "Sunspot Spear",
             "name": "Zeta",
             "race": "Human",
             "rarity": "SSR",

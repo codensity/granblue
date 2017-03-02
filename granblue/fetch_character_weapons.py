@@ -32,7 +32,8 @@ def extract_row(row):
 def keep_row(row):
     join_weapon = row['join_weapon']
     name = row['name']
-    return join_weapon != '???' and \
+    return join_weapon != None and \
+           join_weapon != '???' and \
            join_weapon != '' and \
            name != 'name'
 data = list(filter(keep_row, map(extract_row, CSSSelector('table tr')(tree))))
