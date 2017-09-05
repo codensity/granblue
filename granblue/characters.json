@@ -50,6 +50,14 @@
         },
         {
             "element": "Fire",
+            "join_weapon": "Vulcan Gauntlet",
+            "name": "Aliza",
+            "race": "Draph",
+            "rarity": "SR",
+            "type": "Attack"
+        },
+        {
+            "element": "Fire",
             "join_weapon": "Magma Gauntlet",
             "name": "Aliza",
             "race": "Draph",
@@ -97,12 +105,28 @@
             "type": "Balanced"
         },
         {
+            "element": "Dark",
+            "join_weapon": "Dracula Harp",
+            "name": "Ange",
+            "race": "Human",
+            "rarity": "SR",
+            "type": "Attack"
+        },
+        {
             "element": "Fire",
             "join_weapon": "Ramulus",
             "name": "Anila",
             "race": "Draph",
             "rarity": "SSR",
             "type": "Balanced"
+        },
+        {
+            "element": "Fire",
+            "join_weapon": "Cursed Flame Candelabra",
+            "name": "Anna",
+            "race": "Human",
+            "rarity": "R",
+            "type": "Attack"
         },
         {
             "element": "Fire",
@@ -170,6 +194,14 @@
         },
         {
             "element": "Earth",
+            "join_weapon": "Tropical Punch",
+            "name": "Ayer",
+            "race": "Human",
+            "rarity": "SR",
+            "type": "Attack"
+        },
+        {
+            "element": "Earth",
             "join_weapon": "Ancient Bandages",
             "name": "Ayer",
             "race": "Human",
@@ -191,6 +223,14 @@
             "race": "Harvin",
             "rarity": "R",
             "type": "Attack"
+        },
+        {
+            "element": "Light",
+            "join_weapon": "Symbol of Justice",
+            "name": "Baotorda",
+            "race": "Draph",
+            "rarity": "SSR",
+            "type": "Defense"
         },
         {
             "element": "Light",
@@ -241,12 +281,28 @@
             "type": "Attack"
         },
         {
+            "element": "Fire",
+            "join_weapon": "Arson Link",
+            "name": "Blazing Teacher Elmott",
+            "race": "Erune",
+            "rarity": "SR",
+            "type": "Balanced"
+        },
+        {
             "element": "Water",
             "join_weapon": "White Sword",
             "name": "Bridgette",
             "race": "Harvin",
             "rarity": "R",
             "type": "Special"
+        },
+        {
+            "element": "Dark",
+            "join_weapon": "Black Ouroboros",
+            "name": "Cagliostro",
+            "race": "Human",
+            "rarity": "SSR",
+            "type": "Heal"
         },
         {
             "element": "Earth",
@@ -286,6 +342,14 @@
             "name": "Camieux",
             "race": "Draph",
             "rarity": "R",
+            "type": "Special"
+        },
+        {
+            "element": "Water",
+            "join_weapon": "Water Balloons",
+            "name": "Camieux",
+            "race": "Draph",
+            "rarity": "SR",
             "type": "Special"
         },
         {
@@ -338,6 +402,14 @@
         },
         {
             "element": "Water",
+            "join_weapon": "Floaty Sword",
+            "name": "Charlotta",
+            "race": "Harvin",
+            "rarity": "SR",
+            "type": "Balance"
+        },
+        {
+            "element": "Water",
             "join_weapon": "Phantom Thief Blade",
             "name": "Chat Noir",
             "race": "Human",
@@ -354,11 +426,27 @@
         },
         {
             "element": "Wind",
+            "join_weapon": "Seaside Memory",
+            "name": "Chloe",
+            "race": "Erune",
+            "rarity": "SR",
+            "type": "Special"
+        },
+        {
+            "element": "Wind",
             "join_weapon": "Jewel Modele",
             "name": "Christina",
             "race": "Human",
             "rarity": "SSR",
             "type": "Balanced"
+        },
+        {
+            "element": "Light",
+            "join_weapon": "Fusion Mobius",
+            "name": "Clarisse",
+            "race": "Human",
+            "rarity": "SSR",
+            "type": "Attack"
         },
         {
             "element": "Fire",
@@ -434,18 +522,18 @@
         },
         {
             "element": "Dark",
-            "join_weapon": "Puppet Knife",
-            "name": "Danua",
-            "race": "Draph",
-            "rarity": "SR",
-            "type": "Special"
-        },
-        {
-            "element": "Dark",
             "join_weapon": "Mikazuki",
             "name": "Danua",
             "race": "Draph",
             "rarity": "SSR",
+            "type": "Special"
+        },
+        {
+            "element": "Dark",
+            "join_weapon": "Puppet Knife",
+            "name": "Danua",
+            "race": "Draph",
+            "rarity": "SR",
             "type": "Special"
         },
         {
@@ -473,6 +561,14 @@
             "type": "Heal"
         },
         {
+            "element": "Dark",
+            "join_weapon": "Brocken Lance",
+            "name": "Deliford",
+            "race": "Human",
+            "rarity": "SR",
+            "type": "Defense"
+        },
+        {
             "element": "Water",
             "join_weapon": "Night Horn",
             "name": "Deliford",
@@ -481,11 +577,35 @@
             "type": "Defense"
         },
         {
+            "element": "Water",
+            "join_weapon": "Tlepilli",
+            "name": "Diantha",
+            "race": "Human",
+            "rarity": "SSR",
+            "type": "Special"
+        },
+        {
+            "element": "Water",
+            "join_weapon": "Resonating Wand",
+            "name": "Diantha",
+            "race": "Human",
+            "rarity": "SR",
+            "type": "Special"
+        },
+        {
             "element": "Fire",
             "join_weapon": "Cup and Saucer",
             "name": "Dorothy",
             "race": "Human",
             "rarity": "SR",
+            "type": "Special"
+        },
+        {
+            "element": "Water",
+            "join_weapon": "Blue Sphere",
+            "name": "Drang",
+            "race": "Erune",
+            "rarity": "SSR",
             "type": "Special"
         },
         {
@@ -521,6 +641,14 @@
             "type": "Attack"
         },
         {
+            "element": "Fire",
+            "join_weapon": "Deathly Arson",
+            "name": "Elmott",
+            "race": "Erune",
+            "rarity": "SR",
+            "type": "Attack"
+        },
+        {
             "element": "Wind",
             "join_weapon": "Songsmith's Harp",
             "name": "Elta",
@@ -550,6 +678,14 @@
             "name": "Eso",
             "race": "Human",
             "rarity": "R",
+            "type": "Attack"
+        },
+        {
+            "element": "Earth",
+            "join_weapon": "Desert Arms",
+            "name": "Eugen",
+            "race": "Human",
+            "rarity": "SR",
             "type": "Attack"
         },
         {
@@ -626,6 +762,14 @@
         },
         {
             "element": "Light",
+            "join_weapon": "Ethereal Lasher",
+            "name": "Ferry",
+            "race": "Erune",
+            "rarity": "SSR",
+            "type": "Balanced"
+        },
+        {
+            "element": "Light",
             "join_weapon": "Soul Edge",
             "name": "Ferry",
             "race": "Erune",
@@ -639,14 +783,6 @@
             "race": "Erune",
             "rarity": "SR",
             "type": "Special"
-        },
-        {
-            "element": "Light",
-            "join_weapon": "Ethereal Lasher",
-            "name": "Ferry",
-            "race": "Erune",
-            "rarity": "SSR",
-            "type": "Balanced"
         },
         {
             "element": "Fire",
@@ -706,6 +842,14 @@
         },
         {
             "element": "Fire",
+            "join_weapon": "Rope Knuckles",
+            "name": "Ghandagoza",
+            "race": "Draph",
+            "rarity": "SR",
+            "type": "Attack"
+        },
+        {
+            "element": "Fire",
             "join_weapon": "Brahma Gauntlet",
             "name": "Ghandagoza",
             "race": "Draph",
@@ -719,6 +863,14 @@
             "race": "Unknown",
             "rarity": "SR",
             "type": "Special"
+        },
+        {
+            "element": "Fire",
+            "join_weapon": "Draco Claw",
+            "name": "Grea",
+            "race": "Unknown",
+            "rarity": "SSR",
+            "type": "Attack"
         },
         {
             "element": "Earth",
@@ -762,6 +914,14 @@
         },
         {
             "element": "Wind",
+            "join_weapon": "Skirt Chaser",
+            "name": "Helnar",
+            "race": "Erune",
+            "rarity": "SR",
+            "type": "Special"
+        },
+        {
+            "element": "Wind",
             "join_weapon": "Tilvung",
             "name": "Helnar",
             "race": "Erune",
@@ -785,6 +945,14 @@
             "type": "Balanced"
         },
         {
+            "element": "Fire",
+            "join_weapon": "Sunflower Wand",
+            "name": "Io",
+            "race": "Human",
+            "rarity": "SSR",
+            "type": "Attack"
+        },
+        {
             "element": "Light",
             "join_weapon": "Gambanteinn",
             "name": "Io",
@@ -794,11 +962,11 @@
         },
         {
             "element": "Fire",
-            "join_weapon": "Sunflower Wand",
-            "name": "Io",
+            "join_weapon": "Cold Noodles",
+            "name": "Ippatsu",
             "race": "Human",
-            "rarity": "SSR",
-            "type": "Attack"
+            "rarity": "R",
+            "type": "Special"
         },
         {
             "element": "Fire",
@@ -807,6 +975,14 @@
             "race": "Human",
             "rarity": "R",
             "type": "Special"
+        },
+        {
+            "element": "Water",
+            "join_weapon": "Frostbite",
+            "name": "Izmir",
+            "race": "Draph",
+            "rarity": "SSR",
+            "type": "Attack"
         },
         {
             "element": "Water",
@@ -823,6 +999,22 @@
             "race": "Human",
             "rarity": "SR",
             "type": "Special"
+        },
+        {
+            "element": "Earth",
+            "join_weapon": "Silver Rings",
+            "name": "J.J.",
+            "race": "Human",
+            "rarity": "SR",
+            "type": "Special"
+        },
+        {
+            "element": "Dark",
+            "join_weapon": "Katzbalger",
+            "name": "Jamil",
+            "race": "Human",
+            "rarity": "SR",
+            "type": "Attack"
         },
         {
             "element": "Earth",
@@ -849,6 +1041,14 @@
             "type": "Heal"
         },
         {
+            "element": "Light",
+            "join_weapon": "Lance d'Espoir",
+            "name": "Jeanne d'Arc",
+            "race": "Human",
+            "rarity": "SR",
+            "type": "Special"
+        },
+        {
             "element": "Dark",
             "join_weapon": "Disparia",
             "name": "Jeanne d'Arc",
@@ -865,6 +1065,14 @@
             "type": "Balanced"
         },
         {
+            "element": "Fire",
+            "join_weapon": "Custom Arquebus",
+            "name": "Jessica",
+            "race": "Human",
+            "rarity": "SR",
+            "type": "Special"
+        },
+        {
             "element": "Earth",
             "join_weapon": "Handy Arquebus",
             "name": "Jessica",
@@ -873,12 +1081,28 @@
             "type": "Special"
         },
         {
+            "element": "Fire",
+            "join_weapon": "Arquebus",
+            "name": "Jessica",
+            "race": "Human",
+            "rarity": "SR",
+            "type": "Balanced"
+        },
+        {
             "element": "Earth",
             "join_weapon": "Tyrian Tiger Blade",
             "name": "Jin",
             "race": "Human",
             "rarity": "SR",
             "type": "Heal"
+        },
+        {
+            "element": "Earth",
+            "join_weapon": "Obsidian Bow",
+            "name": "Jin",
+            "race": "Human",
+            "rarity": "SR",
+            "type": "Attack"
         },
         {
             "element": "Water",
@@ -937,14 +1161,6 @@
             "type": "Balanced"
         },
         {
-            "element": "Water",
-            "join_weapon": "Metal Hand",
-            "name": "Katapillar and Vira",
-            "race": "Unknown",
-            "rarity": "SSR",
-            "type": "Special"
-        },
-        {
             "element": "Wind",
             "join_weapon": "Stravaria",
             "name": "Keehar",
@@ -955,6 +1171,14 @@
         {
             "element": "Wind",
             "join_weapon": "Wing of the Pure",
+            "name": "Korwa",
+            "race": "Erune",
+            "rarity": "SSR",
+            "type": "Special"
+        },
+        {
+            "element": "Wind",
+            "join_weapon": "Bell of Happy Endings",
             "name": "Korwa",
             "race": "Erune",
             "rarity": "SSR",
@@ -1001,6 +1225,14 @@
             "type": "Special"
         },
         {
+            "element": "Water",
+            "join_weapon": "Metal Hand",
+            "name": "Lady Katapillar and Vira",
+            "race": "Unknown",
+            "rarity": "SSR",
+            "type": "Special"
+        },
+        {
             "element": "Earth",
             "join_weapon": "Dreadflayer",
             "name": "Laguna",
@@ -1014,6 +1246,14 @@
             "name": "Lamretta",
             "race": "Draph",
             "rarity": "R",
+            "type": "Special"
+        },
+        {
+            "element": "Water",
+            "join_weapon": "Bottle o' Blossoms",
+            "name": "Lamretta",
+            "race": "Draph",
+            "rarity": "SR",
             "type": "Special"
         },
         {
@@ -1038,6 +1278,14 @@
             "name": "Lecia",
             "race": "Human",
             "rarity": "SSR",
+            "type": "Balanced"
+        },
+        {
+            "element": "Wind",
+            "join_weapon": "Pirate Sword",
+            "name": "Lecia",
+            "race": "Human",
+            "rarity": "SR",
             "type": "Balanced"
         },
         {
@@ -1071,6 +1319,14 @@
             "race": "Unknown",
             "rarity": "SSR",
             "type": "Heal"
+        },
+        {
+            "element": "Dark",
+            "join_weapon": "Cleaver",
+            "name": "Lowain",
+            "race": "Erune",
+            "rarity": "R",
+            "type": "Attack"
         },
         {
             "element": "Dark",
@@ -1121,6 +1377,14 @@
             "type": "Special"
         },
         {
+            "element": "Dark",
+            "join_weapon": "Night Air Bell",
+            "name": "Lunalu",
+            "race": "Harvin",
+            "rarity": "R",
+            "type": "Special"
+        },
+        {
             "element": "Fire",
             "join_weapon": "Illusion Scepter",
             "name": "Magisa",
@@ -1158,6 +1422,14 @@
             "name": "Mary",
             "race": "Human",
             "rarity": "SR",
+            "type": "Balanced"
+        },
+        {
+            "element": "Fire",
+            "join_weapon": "Firecracker",
+            "name": "Mary",
+            "race": "Human",
+            "rarity": "R",
             "type": "Balanced"
         },
         {
@@ -1346,19 +1618,19 @@
         },
         {
             "element": "Wind",
-            "join_weapon": "Heaven's Cloud",
-            "name": "Petra",
-            "race": "Human",
-            "rarity": "SSR",
-            "type": "Balanced"
-        },
-        {
-            "element": "Wind",
             "join_weapon": "Moss Tree Staff",
             "name": "Petra",
             "race": "Human",
             "rarity": "R",
             "type": "Heal"
+        },
+        {
+            "element": "Wind",
+            "join_weapon": "Heaven's Cloud",
+            "name": "Petra",
+            "race": "Human",
+            "rarity": "SSR",
+            "type": "Balanced"
         },
         {
             "element": "Light",
@@ -1367,6 +1639,14 @@
             "race": "Harvin",
             "rarity": "R",
             "type": "Heal"
+        },
+        {
+            "element": "Dark",
+            "join_weapon": "Cruel Claw",
+            "name": "Predator",
+            "race": "Human",
+            "rarity": "SR",
+            "type": "Attack"
         },
         {
             "element": "Fire",
@@ -1505,6 +1785,22 @@
             "type": "Defense"
         },
         {
+            "element": "Earth",
+            "join_weapon": "Ripple Harp",
+            "name": "Sara",
+            "race": "Human",
+            "rarity": "SR",
+            "type": "Defense"
+        },
+        {
+            "element": "Earth",
+            "join_weapon": "Sandcastle Spear",
+            "name": "Sara",
+            "race": "Human",
+            "rarity": "SR",
+            "type": "Defense"
+        },
+        {
             "element": "Light",
             "join_weapon": "Sealed Claustrum",
             "name": "Sarunan",
@@ -1522,15 +1818,31 @@
         },
         {
             "element": "Wind",
-            "join_weapon": "White Talons",
+            "join_weapon": "Deirdre's Claws",
+            "name": "Scathacha",
+            "race": "Erune",
+            "rarity": "SSR",
+            "type": "Attack"
+        },
+        {
+            "element": "Wind",
+            "join_weapon": "Platinum Harp",
+            "name": "Selfira",
+            "race": "Erune",
+            "rarity": "SR",
+            "type": "Heal"
+        },
+        {
+            "element": "Fire",
+            "join_weapon": "Crimson Talons",
             "name": "Sen",
             "race": "Erune",
             "rarity": "SR",
             "type": "Attack"
         },
         {
-            "element": "Fire",
-            "join_weapon": "Crimson Talons",
+            "element": "Wind",
+            "join_weapon": "White Talons",
             "name": "Sen",
             "race": "Erune",
             "rarity": "SR",
@@ -1543,6 +1855,14 @@
             "race": "Erune",
             "rarity": "SSR",
             "type": "Attack"
+        },
+        {
+            "element": "Wind",
+            "join_weapon": "Holy Axe",
+            "name": "Sevastien",
+            "race": "Erune",
+            "rarity": "SR",
+            "type": "Balanced"
         },
         {
             "element": "Wind",
@@ -1561,12 +1881,28 @@
             "type": "Special"
         },
         {
+            "element": "Wind",
+            "join_weapon": "Sinensis",
+            "name": "Siegfried",
+            "race": "Human",
+            "rarity": "SSR",
+            "type": "Attack"
+        },
+        {
             "element": "Earth",
             "join_weapon": "Ascalon (Premium)",
             "name": "Siegfried",
             "race": "Human",
             "rarity": "SSR",
             "type": "Special"
+        },
+        {
+            "element": "Water",
+            "join_weapon": "Harpoon",
+            "name": "Sig",
+            "race": "Human",
+            "rarity": "SR",
+            "type": "Attack"
         },
         {
             "element": "Water",
@@ -1585,20 +1921,20 @@
             "type": "Attack"
         },
         {
-            "element": "Fire",
-            "join_weapon": "Blushing Blossom Pin",
-            "name": "Societte",
-            "race": "Erune",
-            "rarity": "SSR",
-            "type": "Defense"
-        },
-        {
             "element": "Water",
             "join_weapon": "Scarlet Vane",
             "name": "Societte",
             "race": "Erune",
             "rarity": "SSR",
             "type": "Special"
+        },
+        {
+            "element": "Fire",
+            "join_weapon": "Blushing Blossom Pin",
+            "name": "Societte",
+            "race": "Erune",
+            "rarity": "SSR",
+            "type": "Defense"
         },
         {
             "element": "Light",
@@ -1641,6 +1977,14 @@
             "type": "Heal"
         },
         {
+            "element": "Water",
+            "join_weapon": "Sunshade Parasol",
+            "name": "Suframare",
+            "race": "Harvin",
+            "rarity": "SR",
+            "type": "Special"
+        },
+        {
             "element": "Fire",
             "join_weapon": "Glass Bow",
             "name": "Sutera",
@@ -1653,6 +1997,14 @@
             "join_weapon": "Sutera's Bow",
             "name": "Sutera",
             "race": "Erune",
+            "rarity": "SR",
+            "type": "Balanced"
+        },
+        {
+            "element": "Dark",
+            "join_weapon": "Shade Knife",
+            "name": "Tanya",
+            "race": "Human",
             "rarity": "SR",
             "type": "Balanced"
         },
@@ -1689,6 +2041,14 @@
             "type": "Special"
         },
         {
+            "element": "Water",
+            "join_weapon": "Tanzanite Sword",
+            "name": "Therese",
+            "race": "Human",
+            "rarity": "SR",
+            "type": "Special"
+        },
+        {
             "element": "Fire",
             "join_weapon": "Tanzanite Sword Mikoh",
             "name": "Therese",
@@ -1711,6 +2071,14 @@
             "race": "Harvin",
             "rarity": "SR",
             "type": "Special"
+        },
+        {
+            "element": "Water",
+            "join_weapon": "Blossom Axe",
+            "name": "Vane",
+            "race": "Human",
+            "rarity": "SSR",
+            "type": "Defense"
         },
         {
             "element": "Water",
@@ -1809,6 +2177,22 @@
             "type": "Defense"
         },
         {
+            "element": "Earth",
+            "join_weapon": "Wooden Dagger",
+            "name": "Walder",
+            "race": "Human",
+            "rarity": "R",
+            "type": "Balanced"
+        },
+        {
+            "element": "Earth",
+            "join_weapon": "Tree Wand",
+            "name": "Walder",
+            "race": "Human",
+            "rarity": "R",
+            "type": "Balanced"
+        },
+        {
             "element": "Dark",
             "join_weapon": "Cursed Cane",
             "name": "Will",
@@ -1830,6 +2214,14 @@
             "name": "Yaia",
             "race": "Draph",
             "rarity": "SR",
+            "type": "Special"
+        },
+        {
+            "element": "Earth",
+            "join_weapon": "Bella Aeterna",
+            "name": "Yggdrasil",
+            "race": "Primal",
+            "rarity": "SSR",
             "type": "Special"
         },
         {
