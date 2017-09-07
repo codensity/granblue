@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GBF Co-op English Autotranslate
 // @namespace    https://codensity.github.io/
-// @version      0.1
+// @version      0.2
 // @description  Translates room descriptions into English
 // @match        *://game.granbluefantasy.jp/*
 // @match        *://gbf.game.mbga.jp/*
@@ -186,6 +186,22 @@
 
         ["黒麒麟", "Qilin"],
         ["黄龍", "Huanglong"],
+
+        ["幽光の羽", "Gleaming Feather"],
+        ["泡影の風羽", "Mystical Feather"],
+        ["雄風の葉", "Vortical Pinwheel"],
+        ["幽光の砂", "Gleaming Sand Bottle"],
+        ["泡影の火砂", "Mystical Flame"],
+        ["烈火の岩石", "Searing Stone"],
+        ["幽光の水", "Gleaming Water Jug"],
+        ["泡影の水流", "Mystical Splash"],
+        ["麗水の珊瑚", "Resplendent Coral"],
+        ["幽光の岩", "Gleaming Stone"],
+        ["泡影の岩砂", "Mystical Alluvium"],
+        ["豊沃の琥珀", "Opulent Amber"],
+        ["赤銅の古紋", "Bronze Disk"], // "-plated" excluded for conciseness
+        ["白銀の古紋", "Silver Disk"],
+        ["黄金の古紋", "Gold Disk"],
 
         ["雑談", "Chat Room"],
         ["ＨＬ", "HL"],
