@@ -428,7 +428,7 @@ function updateRates() {
                 return;
             }
         }
-        var m = part.match(/^(.+[^0-9\. ]) ?(\n +\([^()]+\))?([0-9\.]+)$/);
+        var m = part.match(/^(.+[^0-9\. ]) ?(\n +\([^()]+\) *)?([0-9\.]+)$/);
         if (!m) {
             if (part.length !== 0) {
                 console.log("failed to parse", JSON.stringify(part));
