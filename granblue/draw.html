@@ -9,8 +9,11 @@
 			body { font-family: -apple-system, sans-serif; font-size: 80%; max-width: 80em; margin: 0 auto; }
 			h1 { font-size: 1.5em;  }
 			h1, .warning { text-align: center; }
+			h3 { margin: 0.4em 1.4em 0; font-size: 1em; }
 			p { margin: 1.4em; }
-			#chart { height: 31em; width: calc(100% - 18em - 1.4em); }
+			.chart { width: calc(100% - 18em - 1.4em); cursor: pointer; }
+			#chart-cumulative { height: 21em; }
+			#chart-distribution { height: 10em; }
 			#options { float: right; width: 18em; margin-left: 1.4em; }
 			#minimum { width: 3em; }
 			#queries { padding-left: 1em; }
@@ -20,7 +23,7 @@
 			#options > label:first-child { margin-top: 0; }
 			textarea { width: 95%; }
 			@media only screen and (max-width: 32em) {
-				#chart { width: 100%; }
+				.chart { width: 100%; }
 				#options { float: none; width: calc(100% - 1em); margin: 0 0.5em; }
 			}
 		</style>
@@ -458,7 +461,16 @@ Rare Summon Rates
   Skeleton 1.041%</textarea>
 			<small>Built-in draw rates last updated 2017-03-05.</small>
 		</form>
-		<div id="chart"></div>
+		<div class="chart" id="chart-cumulative"></div>
+		<h3>Probability of drawing
+			<select id="chart-distribution-mode">
+				<option value="gte">at least</option>
+				<option value="eq">exactly</option>
+			</select>
+			a particular number of items from the selection in
+			<span id="chart-distribution-draw-count">N draws</span>
+		</h3>
+		<div class="chart" id="chart-distribution"></div>
 		<p>Bookmark this page to save your wishlist and settings. Updates to the draw rate input list are not currently saved.</p>
 		<p>Results will be slightly (~1%) off from the real rate as calculations are made by summing the individual draw rates, which are given rounded.</p>
 		<p>Draws are currently only calculated as single draws. In 10-part draws, real SR rates will be slightly higher and real R rates will be slightly lower. If you know how to efficiently calculate the cumulative probability of two binomial distributions with different probabilities, <a href="https://github.com/codensity/codensity.github.io/issues">I'd like to hear from you.</a></p>

@@ -57,6 +57,56 @@ function compute(X, N, P) {
     return Betacdf;
 }
 
+// from http://www.ciphersbyritter.com/JAVASCRP/BINOMPOI.HTM#Binomial
+
+function factorial(x) {
+    var t=1;
+    while (x > 1)
+        t *= x--;
+    return t;
+}
+
+// ln(x!) by Stirling's formula
+//   see Knuth I: 111
+function LnFact(x) {
+    if (x <= 1) x = 1;
+
+    if (x < 12) {
+        return Math.log(factorial(Math.round(x)));
+    } else {
+        var invx = 1 / x;
+        var invx2 = invx * invx;
+        var invx3 = invx2 * invx;
+        var invx5 = invx3 * invx2;
+        var invx7 = invx5 * invx2;
+
+        var sum = ((x + 0.5) * Math.log(x)) - x;
+        sum += Math.log(2*Math.PI) / 2;
+        sum += (invx / 12) - (invx3 / 360);
+        sum += (invx5 / 1260) - (invx7 / 1680);
+
+        return sum;
+    }
+}
+
+function LnComb(n, k) {
+    if (k == 0 || k == n) {
+        return 0;
+    } else if (k > n || k < 0) {
+        return -1E38;
+    } else {
+        return LnFact(n) - LnFact(k) - LnFact(n - k);
+    }
+}
+
+// for success probability p and n trials
+//     probability of exactly k successes
+function BinomTerm(k, n, p) {
+  return Math.exp(LnComb(n, k)
+      + k * Math.log(p)
+      + (n - k) * Math.log(1 - p));
+}
+
 // }}}
 
 // from underscore.js 1.8.3 {{{
@@ -110,22 +160,74 @@ function removeAllChildren(e) {
     });
 }
 
-var chartElementID = "chart";
+var chartCumulativeElementID = "chart-cumulative";
+var chartDistributionElementID = "chart-distribution";
+var chartDistributionModeSelectElement = document.getElementById("chart-distribution-mode");
+var chartDistributionDrawCountElement = document.getElementById("chart-distribution-draw-count");
 var formulaElement = document.getElementById("formula");
 
 function roundWith(n, m) {
     return Math.round(n * m) / m;
 }
 
-var chartElement;
+function percentageRound(orig) {
+    var p = roundWith(orig, 1000);
+    if (p === 100 && orig !== 100) { // don't round to 100%
+        p = orig;
+    }
+    return p;
+}
 
-function plot(min, n, prob) {
-    var step = n <= 50 ? 1 : n <= 100 ? 2 : 5;
-    var labels = [];
+function pluralSuffix(n) {
+    return n === 1 ? "" : "s";
+}
+
+var chartCumulative;
+var chartDistribution;
+var lastChartProb = null;
+
+// Replaced for improved performance. We don't need this to be accurate.
+Morris.Grid.prototype.measureText = function(text, angle) {
+    if (text === undefined) {
+        return {width:0,height:0};
+    } else {
+        return {width:25,height:16};
+    }
+};
+
+// Patch drawXAxis to always draw all labels and skip angle transforms.
+Morris.Bar.prototype.drawXAxis = function() {
+    var i, label, margin, offset, row, textBox, ypos, _i, _ref, _results;
+    ypos = this.bottom + (this.options.xAxisLabelTopPadding || this.options.padding / 2);
+    _results = [];
+    for (i = _i = 0, _ref = this.data.length; 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
+        row = this.data[this.data.length - 1 - i];
+        label = this.drawXAxisLabel(row._x, ypos, row.label);
+        textBox = label.getBBox();
+        label.transform("t0," + (textBox.height / 2) + "...");
+        _results.push(textBox.x - this.options.xLabelMargin);
+    }
+    return _results;
+};
+
+var selectedDistributionDrawCount = 1/0; // +inf
+var lastPlotCumulativeInputKey = [];
+function plotCumulative(min, n, prob) {
+    var inputKey = [min, n, prob].toString();
+    if (inputKey === lastPlotCumulativeInputKey) {
+        return;
+    }
+    lastPlotCumulativeInputKey = inputKey;
+
+    var step =
+        n <= 50 ? 1 :
+        n <= 100 ? 2 :
+        n <= 300 ? 5 :
+        n <= 600 ? 10 :
+        50;
     var data = [];
     var x = min - 1;
     function addPoint(i) {
-        labels.push("" + i);
         var p = 1 - compute(x, i, prob);
         data.push({draws: i, p: 100 * p});
     }
@@ -133,20 +235,25 @@ function plot(min, n, prob) {
         addPoint(i);
     }
     addPoint(n);
-    formulaElement.innerText =
+    formulaElement.innerHTML =
         "P[X >= " + min + "] for X~B(" + n + ", " +
         roundWith(prob, 1000000) + ") = " +
-        roundWith(data[data.length - 1].p / 100, 1000000);
+        roundWith(data[data.length - 1].p / 100, 1000000) +
+        "<br>P[X = " + min + "] for X~B(" + n + ", " +
+        roundWith(prob, 1000000) + ") = " +
+        roundWith(BinomTerm(min, n, prob), 1000000);
 
-    if (chartElement !== undefined) {
-        chartElement.setData(data);
+    lastChartProb = prob;
+
+    if (chartCumulative !== undefined) {
+        chartCumulative.setData(data);
         return;
     }
 
-    chartElement = new Morris.Line({
-        element: chartElementID,
+    chartCumulative = new Morris.Line({
+        element: chartCumulativeElementID,
         data: data,
-        axes: "y",
+        axes: "y", // x-axis omitted for speed
         xkey: "draws",
         ykeys: ["p"],
         ymin: 0,
@@ -156,13 +263,94 @@ function plot(min, n, prob) {
         parseTime: false,
         postUnits: "%",
         hoverCallback: function (index, options, content, row) {
-            var s = row.draws === 1 ? "" : "s";
-            var p = roundWith(row.p, 1000);
-            if (p === 100 && row.p !== 100) { // don"t round to 100%
-                p = row.p;
-            }
-            return row.draws + " draw" + s +": " + p + "%";
+            var s = pluralSuffix(row.draws);
+            var p = percentageRound(row.p);
+            return row.draws + " draw" + s + ": " + p + "%";
         }
+    });
+    chartCumulative.on("click", function(i, src) {
+        var min = +minimumInput.value;
+        if (src.draws < +maxDrawsInput.value) {
+            selectedDistributionDrawCount = src.draws;
+        } else {
+            selectedDistributionDrawCount = 1/0; // +inf
+        }
+        plotDistribution(min, src.draws, lastChartProb);
+    });
+}
+
+function distributionPlotStart(min, exact) {
+    var startOffset = 9;
+    return Math.max(exact ? 0 : 1, min - startOffset);
+}
+
+var lastPlotDistributionInputKey = [];
+function plotDistribution(min, n, prob) {
+    var mode = chartDistributionModeSelectElement.value;
+    var exact = mode === "eq";
+    var start = distributionPlotStart(min, exact);
+
+    var inputKey = [start, n, prob, mode, currentState().m].toString();
+    if (inputKey === lastPlotDistributionInputKey) {
+        return;
+    }
+    lastPlotDistributionInputKey = inputKey;
+
+    var data = [];
+    var calc;
+    var maxP = 0;
+    if (exact) {
+        calc = BinomTerm;
+    } else {
+        calc = function(x, n, p) {
+            return 1 - compute(x - 1, n, p);
+        };
+    }
+    for (var x = start, m = x + 20; x < m; x++) {
+        var p = calc(x, n, prob);
+        maxP = Math.max(p, maxP);
+        data.push({x: x, p: 100 * p});
+    }
+
+    chartDistributionDrawCountElement.innerText =
+        "" + n + " draw" + pluralSuffix(n) + ":";
+
+    if (chartDistribution !== undefined) {
+        chartDistribution.setData(data);
+        return;
+    }
+
+    chartDistribution = new Morris.Bar({
+        element: chartDistributionElementID,
+        data: data,
+        xkey: "x",
+        ykeys: ["p"],
+        ymin: 0,
+        ymax: 100,
+        labels: ["Probability"],
+        resize: true,
+        parseTime: false,
+        postUnits: "%",
+        hideHover: true,
+        barColors: function (row, sidx, type) {
+            var min = +minimumInput.value;
+            var mode = chartDistributionModeSelectElement.value;
+            var start = distributionPlotStart(min, mode === "eq");
+            var highlight = type === "bar" && row.x + start === min;
+            return highlight ? "#4bafea" : "#0b62a4";
+        },
+        hoverCallback: function (index, options, content, row) {
+            var p = percentageRound(row.p);
+            return row.x + ": " + p + "%";
+        }
+    });
+    chartDistribution.on("click", function(i, src) {
+        var min = src.x;
+        if (min < 1) return;
+        minimumInput.value = min;
+        var e = document.createEvent("HTMLEvents");
+        e.initEvent("change", false, true);
+        minimumInput.dispatchEvent(e);
     });
 }
 
@@ -310,13 +498,14 @@ function updateRates() {
 }
 
 function currentState() {
-    var n = Math.max(1, Math.min(600, +maxDrawsInput.value));
+    var n = Math.max(1, Math.min(3000, +maxDrawsInput.value));
     var min = Math.max(1, minimumInput.value);
     return {
         n: n,
         m: min,
         w: wishlistInput.value,
         e: excludeListInput.value,
+        o: chartDistributionModeSelectElement.value,
         q: queries
     };
 }
@@ -326,6 +515,7 @@ function loadState(st) {
     minimumInput.value = st.m;
     wishlistInput.value = st.w;
     excludeListInput.value = st.e || "";
+    chartDistributionModeSelectElement.value = st.o || "gte";
     queries = st.q || [];
     if (st.g !== undefined) {
         Object.keys(st.g).forEach(function(g) {
@@ -465,7 +655,8 @@ function updatePlotFromInputs(ev) {
 
     var probs = allItems.map(function(item) { return item.p; });
     var probSum = probs.reduce(function(x, y){ return x + y; }, 0);
-    plot(min, n, probSum);
+    plotCumulative(min, n, probSum);
+    plotDistribution(min, Math.min(selectedDistributionDrawCount, n), probSum);
 
     if (ev !== "keyup") {
         if (maxDrawsInput.value != n) {
@@ -538,10 +729,14 @@ function updatePlotFromInputs(ev) {
 var debounceDelay = 300; // ms
 
 ["change", "keyup"].forEach(function(ev) {
-    var onOptionUpdate = debounce(function() { updatePlotFromInputs(ev) }, debounceDelay);
+    var onFastOptionUpdate = function() { updatePlotFromInputs(ev) };
+    var onOptionUpdate = debounce(onFastOptionUpdate, debounceDelay);
     var onDataUpdate = debounce(function() { updateRates(); updatePlotFromInputs(ev) }, debounceDelay);
-    [maxDrawsInput, minimumInput, wishlistInput, excludeListInput].forEach(function(input) {
+    [maxDrawsInput, wishlistInput, excludeListInput].forEach(function(input) {
         input.addEventListener(ev, onOptionUpdate);
+    });
+    [minimumInput, chartDistributionModeSelectElement].forEach(function(input) {
+        input.addEventListener(ev, onFastOptionUpdate);
     });
     drawDataInput.addEventListener(ev, onDataUpdate);
 });
