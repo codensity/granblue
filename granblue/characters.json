@@ -145,6 +145,14 @@
             "type": "Attack"
         },
         {
+            "element": "Water",
+            "join_weapon": "Daemon's Spine",
+            "name": "Anne",
+            "race": "Human",
+            "rarity": "SSR",
+            "type": "Defense"
+        },
+        {
             "element": "Fire",
             "join_weapon": "Forbidden Inferno",
             "name": "Anthuria",
@@ -207,6 +215,14 @@
             "race": "Human",
             "rarity": "SSR",
             "type": "Special"
+        },
+        {
+            "element": "Dark",
+            "join_weapon": "Shadow Viperlance",
+            "name": "Azazel",
+            "race": "Primal",
+            "rarity": "SSR",
+            "type": "Attack"
         },
         {
             "element": "Dark",
@@ -598,6 +614,14 @@
             "name": "Dorothy",
             "race": "Human",
             "rarity": "SR",
+            "type": "Special"
+        },
+        {
+            "element": "Light",
+            "join_weapon": "Gothic Cutlery",
+            "name": "Dorothy and Claudia",
+            "race": "Human",
+            "rarity": "SSR",
             "type": "Special"
         },
         {
@@ -1585,6 +1609,14 @@
             "type": "Special"
         },
         {
+            "element": "Water",
+            "join_weapon": "Sword of Sorcery",
+            "name": "Owen",
+            "race": "Human",
+            "rarity": "SR",
+            "type": "Balanced"
+        },
+        {
             "element": "Wind",
             "join_weapon": "Light Buckler",
             "name": "Pavidus",
@@ -1814,6 +1846,14 @@
             "name": "Sarunan",
             "race": "Erune",
             "rarity": "SSR",
+            "type": "Special"
+        },
+        {
+            "element": "Light",
+            "join_weapon": "Slingshot",
+            "name": "Sarya",
+            "race": "Draph",
+            "rarity": "SR",
             "type": "Special"
         },
         {
@@ -2087,6 +2127,14 @@
             "race": "Human",
             "rarity": "SR",
             "type": "Defense"
+        },
+        {
+            "element": "Dark",
+            "join_weapon": "Vampire's Nail",
+            "name": "Vania",
+            "race": "Unknown",
+            "rarity": "SR",
+            "type": "Special"
         },
         {
             "element": "Dark",
