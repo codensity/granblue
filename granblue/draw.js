@@ -222,19 +222,33 @@ function updateRates() {
     var currentKind = null;
     rates = [];
     ratesByName = {};
-    dataText.split("\n").forEach(function(line) {
-        var gm = line.match(/^(.+) Rates$/);
+    dataText.split("%").forEach(function(part) {
+        part = part.trim();
+        var rate_header = part.match(/^(.+) Rates [0-9\.]+$/);
+        if (rate_header) {
+            return;
+        }
+        var gm = part.match(/^(.+) Rates/);
         if (gm) {
             var group = gm[1].replace(/ ?Rare /, "R ");
             var groupParts = splitGroup(group);
             currentRarity = groupParts[0];
             currentKind = groupParts[1];
+            part = part.slice(gm[0].length);
+            part = part.trim();
+            if (part.length === 0) {
+                return;
+            }
+        }
+        var m = part.match(/^(.+[^0-9\. ]) ?(\n +\([^()]+\))?([0-9\.]+)$/);
+        if (!m) {
+            if (part.length !== 0) {
+                console.log("failed to parse", JSON.stringify(part));
+            }
             return;
         }
-        var m = line.match(/^ +([^0-9]+) ([0-9\.]+)%/);
-        if (!m) return;
         var name = m[1];
-        var p = +m[2] / 100;
+        var p = +m[3] / 100;
         var item = {
             name: name,
             p: p,
