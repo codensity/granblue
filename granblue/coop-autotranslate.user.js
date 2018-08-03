@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GBF Co-op English Autotranslate
 // @namespace    https://codensity.github.io/
-// @version      0.2
+// @version      0.3
 // @description  Translates room descriptions into English
 // @match        *://game.granbluefantasy.jp/*
 // @match        *://gbf.game.mbga.jp/*
@@ -107,6 +107,8 @@
         ["よわバハ", "Proto-Bahamut"],
         ["よわばは", "Proto-Bahamut"],
         ["プロバハ", "Proto-Bahamut"],
+        ["プロトバハムート", "Proto-Bahamut"],
+        ["弱バハ", "Proto-Bahamut Normal"],
         ["つよバハ", "Proto-Bahamut HL"],
         ["つよばは", "Proto-Bahamut HL"],
         ["強バハ", "Proto-Bahamut HL"],
@@ -129,6 +131,7 @@
         ["メド", "Medusa"],
         ["フラム＝グラス", "Twin Elements"],
         ["フラム", "Twin Elements"],
+        ["フラマ", "Twin Elements"],
         ["アポロン", "Apollo"],
         ["アポロロ", "Apollo"],
         ["アポロ", "Apollo"],
@@ -144,6 +147,7 @@
         ["リッチ", "Lich"],
 
         ["プロメテウス", "Prometheus"],
+        ["プロメテ", "Prometheus"],
         ["カーオン", "Ca Ong"],
         ["鯨", "Ca Ong"],
         ["バイヴカハ", "Morrigna"],
@@ -168,6 +172,7 @@
         ["ゆぐ", "Ygg"],
         ["ユグ", "Ygg"],
         ["シュヴァマグ", "Luminiera"],
+        ["シュヴァリエ", "Luminiera"],
         ["シュヴァ", "Lumi"],
         ["シュヴ", "Lumi"],
         ["シュバ", "Lumi"],
@@ -183,6 +188,16 @@
         ["ウリエル", "Uriel"],
         ["ラファ", "Raphael"],
         ["HRT", "HRT (Raphael)"],
+
+        ["シヴァ", "Shiva"],
+        ["エウロペ", "Europa"],
+        ["ゴッドガード・ブローディア", "Godsworn Alexiel"],
+        ["ブローディア", "Alexiel"],
+        ["ゴブロ", "Alexiel"],
+        ["グリームニル", "Grimnir"],
+        ["グリーム", "Grimnir"],
+        ["メタトロン", "Metatron"],
+        ["アバター", "Avatar"],
 
         ["黒麒麟", "Qilin"],
         ["黄龍", "Huanglong"],
