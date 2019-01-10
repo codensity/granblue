@@ -1,1 +1,1 @@
-# codensity.github.io
+# Codensity's Scripts for Granblue
